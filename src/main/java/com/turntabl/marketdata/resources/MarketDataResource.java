@@ -1,6 +1,6 @@
-package com.turntabl.marketdata.resources.webhooks;
+package com.turntabl.marketdata.resources;
 
-import com.turntabl.marketdata.dto.requests.OrderBookDto;
+import com.turntabl.marketdata.dto.OrderBookDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("/api/v1/webhook")
 @Slf4j
-public class MarketDataWebhook {
+public class MarketDataResource {
 
 
 //    @RequestMapping(value="/market-data", method= RequestMethod.POST) same as below

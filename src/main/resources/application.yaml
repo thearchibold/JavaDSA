@@ -1,0 +1,7 @@
+
+market-data:
+  variables:
+    exhange-url:
+      one: https://exchange.matraining.com/md
+      two: https://exchange2.matraining.com/md
+
