@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 public class OrderBookDto {
-    @JsonProperty("TICKER")
     private String ticker;
 
     @JsonProperty("SELL_LIMIT")
