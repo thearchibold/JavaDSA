@@ -11,7 +11,7 @@ import java.util.List;
 public interface MarketDataService {
 
      List<OrderBookDto> getOrderBooks() ;
-
-
+     List<String> getSubscriptions();
+     void subscribe();
 
 }
