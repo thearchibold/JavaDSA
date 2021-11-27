@@ -1,7 +1,16 @@
 
 market-data:
   variables:
-    exhange-url:
+    exchange-url:
       one: https://exchange.matraining.com/md
       two: https://exchange2.matraining.com/md
+    callback: ""
 
+
+spring:
+  mvc:
+    throw-exception-if-no-handler-found: true
+server:
+  error:
+    whitelabel:
+      enabled: false
