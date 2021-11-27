@@ -40,5 +40,10 @@ public class MarketDataResource {
     ResponseEntity<?> subscribe() {
        return new ResponseEntity<>("Mickey D Luffy", HttpStatus.ACCEPTED);
     }
+    
+    @GetMapping("/hello")
+    ResponseEntity<?> hello(){
+        return new ResponseEntity<>("hello there!",  HttpStatus.ACCEPTED);
+    }
 
 }
