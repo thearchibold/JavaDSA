@@ -1,10 +1,12 @@
 
 market-data:
   variables:
+    urls:
+      market-data: https://redbrokers-market-data.herokuapp.com
     exchange-url:
       one: https://exchange.matraining.com/md
       two: https://exchange2.matraining.com/md
-    callback: https://redbrokers-market-data.herokuapp.com
+    callback: "${market-data.variables.urls.market-data}/callback/webhook"
 
 
 spring:

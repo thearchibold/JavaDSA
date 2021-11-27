@@ -1,6 +1,9 @@
 package com.turntabl.marketdata.resources;
 
+import com.turntabl.marketdata.dto.ErrorMessage;
 import com.turntabl.marketdata.dto.OrderBookDto;
+import com.turntabl.marketdata.exceptions.AlreadySubscribedException;
+import com.turntabl.marketdata.exceptions.EntityNotFoundException;
 import com.turntabl.marketdata.service.MarketDataService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,13 +41,33 @@ public class MarketDataResource {
 
     @PostMapping("/md/subscription")
     ResponseEntity<?> subscribe() {
-        marketDataService.subscribe();
-        return new ResponseEntity<>("Mickey D Luffy", HttpStatus.ACCEPTED);
+        try {
+            marketDataService.subscribe();
+        } catch (AlreadySubscribedException ex) {
+            var errorResponse = ErrorMessage.builder()
+                    .message(ex.getMessage())
+                    .httpStatus(HttpStatus.CONFLICT)
+                    .build();
+          return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
+    }
+
+    @DeleteMapping("/md/subscription")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void unsubscribe() throws EntityNotFoundException {
+        var unsubscribeSuccessful = this.marketDataService.unsubscribe();
+        if(!unsubscribeSuccessful) {
+            throw  new EntityNotFoundException("No subscription exists with that callback") ;
+        }
+
+    }
+
+    @PutMapping("/md/subscription")
+    public void mutateSubscriptionCallback() {
+
     }
     
-    @GetMapping("/hello")
-    ResponseEntity<?> hello(){
-        return new ResponseEntity<>("hello there!",  HttpStatus.ACCEPTED);
-    }
+
 
 }

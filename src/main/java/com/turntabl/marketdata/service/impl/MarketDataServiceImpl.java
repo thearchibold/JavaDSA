@@ -1,7 +1,9 @@
 package com.turntabl.marketdata.service.impl;
 
 import com.turntabl.marketdata.dto.OrderBookDto;
+import com.turntabl.marketdata.exceptions.AlreadySubscribedException;
 import com.turntabl.marketdata.service.MarketDataService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -11,8 +13,10 @@ import org.springframework.web.client.RestTemplate;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@Slf4j
 public class MarketDataServiceImpl implements MarketDataService {
     @Autowired
     private  RestTemplate restTemplate;
@@ -39,10 +43,28 @@ public class MarketDataServiceImpl implements MarketDataService {
     }
 
     @Override
-    public void subscribe() {
+    public void subscribe() throws AlreadySubscribedException {
+
+        if(getSubscriptions().contains(callback)) {
+            throw new AlreadySubscribedException(callback);
+        }
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Content-Type", "application/json");
         HttpEntity<?> httpEntity = new HttpEntity<>(callback, httpHeaders);
         restTemplate.exchange(exchange1Url + "/subscription", HttpMethod.POST, httpEntity, String.class);
+    }
+
+    @Override
+    public Boolean unsubscribe() {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Content-Type", "application/json");
+        HttpEntity<?> httpEntity = new HttpEntity<>(callback, httpHeaders);
+        return restTemplate
+                .exchange(exchange1Url+ "/subscription", HttpMethod.DELETE, httpEntity, Boolean.class).getBody();
+    }
+
+    @Override
+    public void mutateSubscription() {
+
     }
 }
