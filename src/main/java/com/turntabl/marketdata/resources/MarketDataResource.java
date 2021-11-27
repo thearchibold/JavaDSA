@@ -38,7 +38,8 @@ public class MarketDataResource {
 
     @PostMapping("/md/subscription")
     ResponseEntity<?> subscribe() {
-       return new ResponseEntity<>("Mickey D Luffy", HttpStatus.ACCEPTED);
+        marketDataService.subscribe();
+        return new ResponseEntity<>("Mickey D Luffy", HttpStatus.ACCEPTED);
     }
     
     @GetMapping("/hello")

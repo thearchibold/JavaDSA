@@ -20,6 +20,9 @@ public class MarketDataServiceImpl implements MarketDataService {
     @Value("${market-data.variables.exchange-url.one}")
     private String exchange1Url;
 
+    @Value("${market-data.variables.callback}")
+    private String callback;
+
     @Override
     public List<OrderBookDto> getOrderBooks() {
 //        return restTemplate
@@ -39,7 +42,7 @@ public class MarketDataServiceImpl implements MarketDataService {
     public void subscribe() {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Content-Type", "application/json");
-        HttpEntity<?> httpEntity = new HttpEntity<>("", httpHeaders);
+        HttpEntity<?> httpEntity = new HttpEntity<>(callback, httpHeaders);
         restTemplate.exchange(exchange1Url + "/subscription", HttpMethod.POST, httpEntity, String.class);
     }
 }
