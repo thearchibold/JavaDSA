@@ -20,7 +20,8 @@ import java.util.Optional;
 public class MarketDataServiceImpl implements MarketDataService {
     @Autowired
     private  RestTemplate restTemplate;
-
+    @Autowired
+    RedisMessageSubscriber redisMessageSubscriber;
     @Value("${market-data.variables.exchange-url.one}")
     private String exchange1Url;
 
@@ -67,4 +68,5 @@ public class MarketDataServiceImpl implements MarketDataService {
     public void mutateSubscription() {
 
     }
+
 }
