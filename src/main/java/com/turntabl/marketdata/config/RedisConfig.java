@@ -3,6 +3,7 @@ package com.turntabl.marketdata.config;
 import com.turntabl.marketdata.service.MessagePublisher;
 import com.turntabl.marketdata.service.impl.RedisMessagePublisher;
 import com.turntabl.marketdata.service.impl.RedisMessageSubscriber;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,7 @@ import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 import org.springframework.data.redis.serializer.GenericToStringSerializer;
 
 @Configuration
+@Slf4j
 public class RedisConfig {
     @Value("${market-data.variables.redis.topic}")
     private  String topic;

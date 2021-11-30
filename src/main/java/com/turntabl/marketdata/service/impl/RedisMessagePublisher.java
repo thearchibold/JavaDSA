@@ -4,16 +4,16 @@ import com.turntabl.marketdata.service.MessagePublisher;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.stereotype.Service;
 
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class RedisMessagePublisher implements MessagePublisher {
-    private  RedisTemplate<String, Object> redisTemplate;
-    private    ChannelTopic topic;
+    private final   RedisTemplate<String, Object> redisTemplate;
+    private final ChannelTopic topic;
 
     @Override
     public void publish(String message) {
