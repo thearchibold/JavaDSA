@@ -1,9 +1,11 @@
 package com.turntabl.marketdata.config;
 
 import com.turntabl.marketdata.service.MessagePublisher;
+import com.turntabl.marketdata.service.impl.ChannelTwoMessageSubscriber;
 import com.turntabl.marketdata.service.impl.RedisMessagePublisher;
 import com.turntabl.marketdata.service.impl.RedisMessageSubscriber;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +21,10 @@ import org.springframework.data.redis.serializer.GenericToStringSerializer;
 public class RedisConfig {
     @Value("${market-data.variables.redis.topic}")
     private  String topic;
+    @Value("${market-data.variables.redis.topic-ex2}")
+    private  String topic2;
+
+
     @Bean
     JedisConnectionFactory jedisConnectionFactory() {
         return new JedisConnectionFactory();
@@ -33,15 +39,27 @@ public class RedisConfig {
     }
 
     @Bean
+    @Qualifier("messageListener")
     MessageListenerAdapter messageListener() {
         return new MessageListenerAdapter(new RedisMessageSubscriber());
     }
 
     @Bean
-    RedisMessageListenerContainer redisContainer() {
+    @Qualifier("channelTwoListenerAdapter")
+    MessageListenerAdapter channelTwoListenerAdapter() {
+        return new MessageListenerAdapter(new ChannelTwoMessageSubscriber());
+    }
+
+    @Bean
+    RedisMessageListenerContainer redisContainer(
+            @Qualifier("messageListener") MessageListenerAdapter messageListener,
+            @Qualifier("channelTwoListenerAdapter") MessageListenerAdapter channelTwoListenerAdapter
+    ) {
         final RedisMessageListenerContainer container = new RedisMessageListenerContainer();
         container.setConnectionFactory(jedisConnectionFactory());
-        container.addMessageListener(messageListener(), topic());
+        container.addMessageListener(messageListener, topic());
+
+        container.addMessageListener(channelTwoListenerAdapter, topicForExchange2());
         return container;
     }
 
@@ -53,5 +71,11 @@ public class RedisConfig {
     @Bean
     ChannelTopic topic() {
         return new ChannelTopic(topic);
+    }
+
+
+    @Bean
+    ChannelTopic topicForExchange2() {
+        return new ChannelTopic(topic2);
     }
 }

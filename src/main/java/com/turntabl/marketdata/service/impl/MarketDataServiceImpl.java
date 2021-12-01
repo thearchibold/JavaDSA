@@ -24,9 +24,12 @@ public class MarketDataServiceImpl implements MarketDataService {
     RedisMessageSubscriber redisMessageSubscriber;
     @Value("${market-data.variables.exchange-url.one}")
     private String exchange1Url;
-
+    @Value("${market-data.variables.exchange-url.two}")
+    private String exchange2Url;
     @Value("${market-data.variables.callback}")
     private String callback;
+    @Value("${market-data.variables.callback-ex2}")
+    private String exchange2Callback;
 
     @Override
     public List<OrderBookDto> getOrderBooks() {
@@ -52,7 +55,9 @@ public class MarketDataServiceImpl implements MarketDataService {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Content-Type", "application/json");
         HttpEntity<?> httpEntity = new HttpEntity<>(callback, httpHeaders);
+        HttpEntity<?> httpEntityEx2 = new HttpEntity<>(exchange2Callback, httpHeaders);
         restTemplate.exchange(exchange1Url + "/subscription", HttpMethod.POST, httpEntity, String.class);
+        restTemplate.exchange(exchange2Url + "/subscription", HttpMethod.POST, httpEntityEx2, String.class);
     }
 
     @Override
