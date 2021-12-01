@@ -14,9 +14,10 @@ market-data:
 spring:
   mvc:
     throw-exception-if-no-handler-found: true
-  redis:
-    port: 6379
-    host: localhost
+#  redis:
+#    port: ${REDIS_PORT}
+#    host: ${REDIS_URL}
+    url: ${REDIS_URL}
 server:
   error:
     whitelabel:

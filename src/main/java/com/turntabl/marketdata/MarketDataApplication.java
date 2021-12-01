@@ -13,7 +13,7 @@ public class MarketDataApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(MarketDataApplication.class, args);
-
+        System.out.println(System.getenv("START"));
     }
 
 
