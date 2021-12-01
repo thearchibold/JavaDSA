@@ -17,7 +17,7 @@ spring:
   redis:
 #    port: ${REDIS_PORT}
 #    host: ${REDIS_URL}
-    url: ${REDIS_URL}
+    url: redis://:p0bcc3ba27d7a815d95c60c6c3bd0aba383cfd7a492e9fef8d5e3af60e23ebb25@ec2-52-3-86-34.compute-1.amazonaws.com:19339
 server:
   error:
     whitelabel:
