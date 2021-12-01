@@ -42,6 +42,8 @@ public class MarketDataResource {
     }
     @PostMapping("/test")
     public void test(@RequestBody String body) {
+        marketDataService.mutateSubscription();
+
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 

@@ -24,7 +24,8 @@ public class MarketDataServiceImpl implements MarketDataService {
     RedisMessageSubscriber redisMessageSubscriber;
     @Value("${market-data.variables.exchange-url.one}")
     private String exchange1Url;
-
+    @Value("${market-data.test}")
+    private String test;
     @Value("${market-data.variables.callback}")
     private String callback;
 
@@ -66,7 +67,7 @@ public class MarketDataServiceImpl implements MarketDataService {
 
     @Override
     public void mutateSubscription() {
-
+       log.info("Logging ========================================VAR{}", test);
     }
 
 }
