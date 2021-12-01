@@ -1,5 +1,6 @@
 
 market-data:
+  test: ${TEST}
   variables:
     urls:
       market-data: https://redbrokers-market-data.herokuapp.com
