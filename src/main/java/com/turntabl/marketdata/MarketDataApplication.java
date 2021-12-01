@@ -20,7 +20,7 @@ public class MarketDataApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(MarketDataApplication.class, args);
-
+       log.info("redis url log {} -=================",System.getenv("REDIS_URL"));
     }
 
     @Bean
