@@ -21,6 +21,10 @@ public class RedisConfig {
     private  String topic;
     @Bean
     JedisConnectionFactory jedisConnectionFactory() {
+//        JedisConnectionFactory factory = new JedisConnectionFactory();
+//        factory.setHostName(redisHostName);
+//        factory.setPort(redisPort);
+//        factory.setUsePool(true);
         return new JedisConnectionFactory();
     }
 
