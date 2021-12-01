@@ -32,8 +32,8 @@ public class RedisConfig {
         var host = System.getenv("REDIS_HOST");
         int port= Integer.parseInt(System.getenv("REDIS_PORT"));
         String password = System.getenv("REDIS_PASSWORD");
-        RedisStandaloneConfiguration redisStandaloneConfiguration =
-                new RedisStandaloneConfiguration(host, port);
+        log.info("Rei details {}", host);
+        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(host, port);
         redisStandaloneConfiguration.setPassword(RedisPassword.of(password));
         return new JedisConnectionFactory(redisStandaloneConfiguration);
     }
