@@ -14,7 +14,7 @@ market-data:
 spring:
   mvc:
     throw-exception-if-no-handler-found: true
-#  redis:
+  redis:
 #    port: ${REDIS_PORT}
 #    host: ${REDIS_URL}
     url: ${REDIS_URL}
