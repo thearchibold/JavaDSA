@@ -30,11 +30,11 @@ public class RedisConfig {
     @Bean
     JedisConnectionFactory jedisConnectionFactory() {
         var host = System.getenv("REDIS_HOST");
-        int port= Integer.parseInt(System.getenv("REDIS_PORT"));
+//        int port= Integer.parseInt(System.getenv("REDIS_PORT"));
         String password = System.getenv("REDIS_PASSWORD");
         log.info("Rei details {}", host);
-        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(host, port);
-        redisStandaloneConfiguration.setPassword(RedisPassword.of(password));
+        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration("localhost", 6379);
+//        redisStandaloneConfiguration.setPassword(RedisPassword.of(password));
         return new JedisConnectionFactory(redisStandaloneConfiguration);
     }
 
