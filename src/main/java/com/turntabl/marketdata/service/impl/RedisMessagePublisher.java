@@ -1,5 +1,6 @@
 package com.turntabl.marketdata.service.impl;
 
+import com.turntabl.marketdata.dto.OrderBookDto;
 import com.turntabl.marketdata.service.MessagePublisher;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class RedisMessagePublisher implements MessagePublisher {
@@ -17,7 +20,8 @@ public class RedisMessagePublisher implements MessagePublisher {
 //    private final Channel topic;
 
     @Override
-    public void publish(String message) {
+    public void publish(List<OrderBookDto> message) {
+
        redisTemplate.convertAndSend(topic.getTopic(), message);
     }
 

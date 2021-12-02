@@ -36,12 +36,18 @@ public class MarketDataResource {
         log.info("order books: {}" ,orderBooks);
         return ResponseEntity.ok("success!!");
     }
+
     @PostMapping("/callback/webhook")
-    ResponseEntity<Object> onMarketDataSubscribe(@RequestBody ArrayList<OrderBookDto> orderBooks){
-        log.info("order books: {}" ,orderBooks);
+    ResponseEntity<Object> onMarketDataSubscribe(@RequestBody List<OrderBookDto> orderBooks){
+        log.info("Order books coming from exchage {}" ,orderBooks);
+        redisMessagePublisher.publish(orderBooks);
         return ResponseEntity.ok("success!!");
     }
 
+    @PostMapping("/callback2/webhook")
+    public void onSecondMarketDataSubscribe(@RequestBody ArrayList<OrderBookDto> orderBooks) {
+
+    }
     /**
      *
      * @param body
@@ -67,7 +73,7 @@ public class MarketDataResource {
         
         try {
             arrayToJson = objectMapper.writeValueAsString(List.of(orderBookDto, orderBookDto2));
-            redisMessagePublisher.publish(arrayToJson);
+            redisMessagePublisher.publish(List.of(orderBookDto, orderBookDto2));
         } catch (JsonProcessingException ex) {
             System.out.println("Error processing data");
         }

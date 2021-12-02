@@ -16,14 +16,14 @@ import java.util.List;
 public class RedisMessageSubscriber implements MessageListener {
     @Override
     public void onMessage(Message message, byte[] pattern) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        List<OrderBookDto> orderbooks = null;
-        try {
-            orderbooks  = objectMapper.readValue(message.getBody(), List.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        List<OrderBookDto> orderbooks = null;
+//        try {
+//            orderbooks  = objectMapper.readValue(message.getBody(), List.class);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
-        log.info("Loggn the data {}", orderbooks);
+        log.info("In Message susbcriber service. Logging subscribed message", message.getBody());
     }
 }
