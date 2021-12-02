@@ -14,9 +14,14 @@ import org.springframework.stereotype.Service;
 public class RedisMessagePublisher implements MessagePublisher {
     private final   RedisTemplate<String, Object> redisTemplate;
     private final ChannelTopic topic;
+//    private final Channel topic;
 
     @Override
     public void publish(String message) {
        redisTemplate.convertAndSend(topic.getTopic(), message);
+    }
+
+    public void publish2(String message) {
+        redisTemplate.convertAndSend("pubsub:market-data-ex2", message);
     }
 }

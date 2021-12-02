@@ -30,6 +30,7 @@ public class MarketDataResource {
     private  String topic;
     private final MarketDataService marketDataService;
     private final RedisMessagePublisher redisMessagePublisher;
+
     @PostMapping("/market-data")
     ResponseEntity<Object> getMarketData(@RequestBody ArrayList<OrderBookDto> orderBooks){
         log.info("order books: {}" ,orderBooks);
@@ -40,6 +41,11 @@ public class MarketDataResource {
         log.info("order books: {}" ,orderBooks);
         return ResponseEntity.ok("success!!");
     }
+
+    /**
+     *
+     * @param body
+     */
     @PostMapping("/test")
     public void test(@RequestBody String body) {
         marketDataService.mutateSubscription();
@@ -58,6 +64,7 @@ public class MarketDataResource {
         orderBookDto.setBuyLimit(100);
         orderBookDto.setBuyLimit(200);
         String arrayToJson = null;
+        
         try {
             arrayToJson = objectMapper.writeValueAsString(List.of(orderBookDto, orderBookDto2));
             redisMessagePublisher.publish(arrayToJson);
@@ -65,9 +72,33 @@ public class MarketDataResource {
             System.out.println("Error processing data");
         }
 
-
     }
 
+    @PostMapping("/callback2/webhook")
+    public void onSecondMarketDataSubscribe(@RequestBody String body) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+        OrderBookDto orderBookDto = new OrderBookDto();
+        OrderBookDto orderBookDto2 = new OrderBookDto();
+        orderBookDto.setAskPrice(10f);
+        orderBookDto2.setAskPrice(102f);
+        orderBookDto.setBidPrice(400f);
+        orderBookDto2.setBidPrice(903f);
+        orderBookDto.setTicker("mxn");
+        orderBookDto2.setTicker("dluffy");
+        orderBookDto.setBuyLimit(9875);
+        orderBookDto.setBuyLimit(10000);
+        String arrayToJson = null;
+
+        try {
+            arrayToJson = objectMapper.writeValueAsString(List.of(orderBookDto, orderBookDto2));
+            redisMessagePublisher.publish2(arrayToJson);
+        } catch (JsonProcessingException ex) {
+            System.out.println("Error processing data");
+        }
+
+    }
 
 
     @GetMapping("/md")
