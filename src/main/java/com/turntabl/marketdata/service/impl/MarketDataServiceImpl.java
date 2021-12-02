@@ -33,8 +33,6 @@ public class MarketDataServiceImpl implements MarketDataService {
 
     @Override
     public List<OrderBookDto> getOrderBooks() {
-//        return restTemplate
-//                .getForEntity(exchange1Url, List<OrderBookDto>.class).getBody();
         return restTemplate.exchange(exchange1Url, HttpMethod.GET, null,
                 new ParameterizedTypeReference<List<OrderBookDto>>(){}).getBody();
 

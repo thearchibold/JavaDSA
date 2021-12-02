@@ -39,14 +39,14 @@ public class MarketDataResource {
 
     @PostMapping("/callback/webhook")
     ResponseEntity<Object> onMarketDataSubscribe(@RequestBody List<OrderBookDto> orderBooks){
-        log.info("Order books coming from exchage {}" ,orderBooks);
+        log.info("Order books coming from exchange one ===>{}" ,orderBooks);
         redisMessagePublisher.publish(orderBooks);
         return ResponseEntity.ok("success!!");
     }
 
     @PostMapping("/callback2/webhook")
     public void onSecondMarketDataSubscribe(@RequestBody ArrayList<OrderBookDto> orderBooks) {
-
+        log.info("Order books coming from exchange two ===>{}" ,orderBooks);
     }
     /**
      *
