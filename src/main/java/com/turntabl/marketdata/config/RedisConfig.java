@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -23,8 +24,9 @@ public class RedisConfig {
 
     @Bean
     JedisConnectionFactory jedisConnectionFactory() {
-        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(System.getenv("REDIS_URL"));
-//        redisStandaloneConfiguration.setPassword(RedisPassword.of("yourRedisPasswordIfAny"));
+        RedisStandaloneConfiguration redisStandaloneConfiguration =
+                new RedisStandaloneConfiguration("http://ec2-52-3-86-34.compute-1.amazonaws.com", 19340);
+        redisStandaloneConfiguration.setPassword(RedisPassword.of("p0bcc3ba27d7a815d95c60c6c3bd0aba383cfd7a492e9fef8d5e3af60e23ebb25"));
 
         return new JedisConnectionFactory(redisStandaloneConfiguration);
     }
