@@ -24,7 +24,7 @@ public class InitConfig {
         try {
             marketDataService.subscribe();
         } catch (AlreadySubscribedException exception) {
-           log.info("Error occurred whiles subscribing to exchange");
+           log.info("AlreadySubscribedException occurred while subscribing to exchange");
         }
     }
 }
