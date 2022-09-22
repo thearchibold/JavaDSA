@@ -1,9 +1,11 @@
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Palinddrome {
 	public static void main(String[] args) {
-		System.out.println(canBePalindrome("aab"));
+		System.out.println(isPalindrome("abba"));
 
 	}
 
@@ -21,5 +23,24 @@ public class Palinddrome {
 		});
 
 		return numberOfOddCharacters.get() <= 1;
+	}
+
+	static boolean isPalindrome(String s){
+		s = s.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+		if(s.equals("")){
+			return true;
+		}
+		int stringLength = s.length();
+		boolean isEven = stringLength % 2 == 0;
+		int leftIndex = stringLength / 2;
+		String leftString = s.substring(0, leftIndex);
+		String rightString;
+		if(isEven){
+			rightString = s.substring(leftIndex);
+		}else{
+			rightString = s.substring(leftIndex + 1);
+		}
+		rightString = new StringBuilder(rightString).reverse().toString();
+		return leftString.equals(rightString);
 	}
 }
