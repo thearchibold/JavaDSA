@@ -1,13 +1,40 @@
-import java.util.*;
+import java.util.Arrays;
 
 public class ArrayRotation {
 	public static void main(String[] args) {
-		int[] arr = {1,2,3,4,5,6,7};
-		int k = 10;
-		int rotateBy = k % arr.length;
-		System.out.println(rotateBy);
-		int[] subList = Arrays.copyOfRange(arr, arr.length - rotateBy, arr.length);
-		int[] remainingArray = Arrays.copyOfRange(arr, 0, arr.length - rotateBy);
+		int[] nums = {1,2};
+		int k = 3;
+
+		rotateBigValues(nums, k);
+
+	}
+
+	public static void rotateSmallValues(int[] nums, int k){
+		int rotateBy = k % nums.length;
+		int temp = nums[nums.length - 1];
+		for (int j = 0; j < rotateBy; j++) {
+			for (int i = nums.length - 1; i > 0; i--) {
+				nums[i] = nums[i - 1];
+			}
+			nums[0] = temp;
+			temp = nums[nums.length - 1];
+		}
+	}
+
+	public static void rotateBigValues(int[] nums, int k){
+		int rotateBy = k % nums.length;
+
+		if(k > rotateBy && rotateBy % 2 != 0){
+			rotateBy+=1;
+		}
+
+		int[] rightArray = Arrays.copyOfRange(nums, rotateBy , nums.length);
+		int[] leftArray = Arrays.copyOfRange(nums, 0, rotateBy);
+
+		System.arraycopy(rightArray, 0, nums, 0, rightArray.length);
+		System.arraycopy(leftArray, 0, nums, rightArray.length, leftArray.length);
+
+		System.out.println(Arrays.toString(leftArray));
 
 	}
 }
